@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SidelineReel — Tag Review</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f7fa;
+      color: #17202a;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .app {
+      min-height: 100vh;
+    }
+
+    .topbar {
+      height: 68px;
+      background: white;
+      border-bottom: 1px solid #e5e9ef;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 42px;
+    }
+
+    .logo {
+      font-size: 21px;
+      font-weight: 750;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      font-weight: 400;
+    }
+
+    .coach-label {
+      font-size: 14px;
+      color: #687386;
+    }
+
+    .content {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 42px 28px 70px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #687386;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 32px;
+      letter-spacing: -1px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .subtitle {
+      margin: 10px 0 0;
+      color: #687386;
+      font-size: 15px;
+    }
+
+    .game-header {
+      background: white;
+      border: 1px solid #e3e7ed;
+      border-radius: 14px;
+      padding: 24px;
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .game-title {
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    .game-meta {
+      color: #687386;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .status-pill {
+      padding: 8px 13px;
+      border-radius: 999px;
+      background: #edf8f1;
+      color: #287548;
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 34px 0 14px;
+    }
+
+    .section-heading span {
+      color: #687386;
+      font-size: 13px;
+    }
+
+    .clip-card {
+      background: white;
+      border: 1px solid #e3e7ed;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      padding: 17px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .clip-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .clip-status {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .clip-status.success {
+      background: #edf8f1;
+      color: #287548;
+    }
+
+    .clip-status.warning {
+      background: #fff4df;
+      color: #a86600;
+    }
+
+    .clip-name {
+      font-weight: 650;
+      font-size: 15px;
+    }
+
+    .clip-player {
+      color: #687386;
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
+    .clip-time {
+      color: #7a8494;
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
+    .review-label {
+      color: #a86600;
+      font-size: 12px;
+      font-weight: 650;
+      margin-right: 13px;
+    }
+
+    .confirmed-label {
+      color: #287548;
+      font-size: 12px;
+      font-weight: 650;
+      margin-right: 13px;
+    }
+
+    .review-button {
+      border: 1px solid #cbd2dc;
+      background: white;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .review-button:hover {
+      background: #f7f9fb;
+    }
+
+    .back-button {
+      border: none;
+      background: transparent;
+      padding: 0;
+      color: #687386;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .back-button:hover {
+      color: #17202a;
+    }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 22px;
+      margin-top: 28px;
+    }
+
+    .video-card,
+    .review-card {
+      background: white;
+      border: 1px solid #e3e7ed;
+      border-radius: 14px;
+    }
+
+    .video-area {
+      height: 350px;
+      background: linear-gradient(135deg, #263238, #455a64);
+      border-radius: 13px 13px 0 0;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .field-lines {
+      position: absolute;
+      width: 75%;
+      height: 65%;
+      border: 2px solid rgba(255,255,255,0.35);
+      border-radius: 4px;
+    }
+
+    .field-circle {
+      position: absolute;
+      width: 125px;
+      height: 125px;
+      border: 2px solid rgba(255,255,255,0.35);
+      border-radius: 50%;
+    }
+
+    .player-marker {
+      position: absolute;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: white;
+      color: #263238;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+
+    .video-caption {
+      padding: 15px 18px;
+      font-size: 13px;
+      color: #687386;
+    }
+
+    .review-card {
+      padding: 25px;
+    }
+
+    .ai-proposal {
+      margin-top: 20px;
+      padding: 17px;
+      border-radius: 10px;
+      background: #f6f8fb;
+      border: 1px solid #e4e8ee;
+    }
+
+    .ai-label {
+      font-size: 12px;
+      color: #687386;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      font-weight: 700;
+    }
+
+    .proposal-player {
+      font-size: 20px;
+      font-weight: 750;
+      margin-top: 7px;
+    }
+
+    .confidence {
+      margin-top: 9px;
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 6px;
+      background: #fff4df;
+      color: #a86600;
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .confirm-button {
+      width: 100%;
+      border: none;
+      background: #17202a;
+      color: white;
+      border-radius: 9px;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-top: 17px;
+    }
+
+    .confirm-button:hover {
+      background: #2c3743;
+    }
+
+    .divider {
+      height: 1px;
+      background: #e5e9ef;
+      margin: 22px 0;
+    }
+
+    .alternative-heading {
+      font-size: 13px;
+      color: #687386;
+      margin-bottom: 10px;
+    }
+
+    .alternative-button {
+      width: 100%;
+      background: white;
+      border: 1px solid #d5dbe3;
+      border-radius: 8px;
+      padding: 10px 12px;
+      text-align: left;
+      margin-top: 8px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .alternative-button:hover {
+      background: #f7f9fb;
+    }
+
+    .success-card {
+      max-width: 620px;
+      margin: 70px auto;
+      background: white;
+      border: 1px solid #e3e7ed;
+      border-radius: 16px;
+      padding: 48px;
+      text-align: center;
+    }
+
+    .success-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #edf8f1;
+      color: #287548;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 27px;
+      font-weight: 800;
+    }
+
+    .success-card h1 {
+      font-size: 28px;
+    }
+
+    .success-card p {
+      color: #687386;
+      line-height: 1.6;
+      margin: 12px auto 0;
+      max-width: 470px;
+    }
+
+    .assigned-player {
+      font-weight: 750;
+      color: #17202a;
+    }
+
+    .saved-note {
+      margin-top: 22px;
+      padding: 13px;
+      background: #f6f8fb;
+      border-radius: 9px;
+      color: #687386;
+      font-size: 13px;
+    }
+
+    .return-button {
+      border: 1px solid #cbd2dc;
+      background: white;
+      border-radius: 9px;
+      padding: 11px 18px;
+      font-weight: 650;
+      margin-top: 25px;
+    }
+
+    .return-button:hover {
+      background: #f7f9fb;
+    }
+
+    @media (max-width: 750px) {
+      .topbar {
+        padding: 0 20px;
+      }
+
+      .content {
+        padding: 30px 18px 50px;
+      }
+
+      .review-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .game-header {
+        align-items: flex-start;
+        gap: 15px;
+        flex-direction: column;
+      }
+
+      .clip-card {
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .review-label,
+      .confirmed-label {
+        display: none;
+      }
+
+      .video-area {
+        height: 270px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="topbar">
+    <div class="logo">Sideline<span>Reel</span></div>
+    <div class="coach-label">Coach Review</div>
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- SCREEN 1: GAME RESULTS -->
+  <!-- ========================= -->
+
+  <div id="resultsScreen">
+
+    <div class="content">
+
+      <div class="eyebrow">Game processing</div>
+
+      <h1>Tagging results</h1>
+
+      <p class="subtitle">
+        AI identified players in your game footage. Two highlights need your review.
+      </p>
+
+
+      <div class="game-header">
+
+        <div>
+          <div class="game-title">
+            Ridgeline U12 vs. Eastside FC
+          </div>
+
+          <div class="game-meta">
+            October 12 · 5 highlights detected
+          </div>
+        </div>
+
+        <div class="status-pill">
+          Processing complete
+        </div>
+
+      </div>
+
+
+      <div class="section-heading">
+
+        <h2>Highlights</h2>
+
+        <span id="taggingSummary">
+          3 tagged automatically · 2 need review
+        </span>
+
+      </div>
+
+
+      <!-- Automatically tagged clips -->
+
+      <div class="clip-card">
+
+        <div class="clip-left">
+
+          <div class="clip-status success">
+            ✓
+          </div>
+
+          <div>
+
+            <div class="clip-name">
+              Goal
+            </div>
+
+            <div class="clip-player">
+              #7 — Jordan Lee
+            </div>
+
+            <div class="clip-time">
+              00:12:34
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="clip-card">
+
+        <div class="clip-left">
+
+          <div class="clip-status success">
+            ✓
+          </div>
+
+          <div>
+
+            <div class="clip-name">
+              Save
+            </div>
+
+            <div class="clip-player">
+              #9 — Ava Williams
+            </div>
+
+            <div class="clip-time">
+              00:18:21
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="clip-card">
+
+        <div class="clip-left">
+
+          <div class="clip-status success">
+            ✓
+          </div>
+
+          <div>
+
+            <div class="clip-name">
+              Assist
+            </div>
+
+            <div class="clip-player">
+              #6 — Sofia Patel
+            </div>
+
+            <div class="clip-time">
+              00:27:42
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- Flagged clip #14 -->
+
+      <div class="clip-card" id="clip14">
+
+        <div class="clip-left">
+
+          <div class="clip-status warning" id="status14">
+            !
+          </div>
+
+          <div>
+
+            <div class="clip-name">
+              Goal
+            </div>
+
+            <div class="clip-player" id="player14">
+              AI suggests #14 — Maya Chen
+            </div>
+
+            <div class="clip-time">
+              00:23:17
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div id="action14">
+
+          <span class="review-label">
+            Needs review
+          </span>
+
+          <button class="review-button"
+                  onclick="openReview('14')">
+            Review
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- Flagged clip #4 -->
+
+      <div class="clip-card" id="clip4">
+
+        <div class="clip-left">
+
+          <div class="clip-status warning" id="status4">
+            !
+          </div>
+
+          <div>
+
+            <div class="clip-name">
+              Big play
+            </div>
+
+            <div class="clip-player" id="player4">
+              AI suggests #4 — Sofia Patel
+            </div>
+
+            <div class="clip-time">
+              00:31:08
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div id="action4">
+
+          <span class="review-label">
+            Needs review
+          </span>
+
+          <button class="review-button"
+                  onclick="openReview('4')">
+            Review
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- SCREEN 2: COACH REVIEW -->
+  <!-- ========================= -->
+
+  <div id="reviewScreen" style="display:none;">
+
+    <div class="content">
+
+      <button class="back-button" onclick="backToResults()">
+        ← Back to tagging results
+      </button>
+
+      <div class="eyebrow">
+        Human review
+      </div>
+
+      <h1>
+        Confirm player assignment
+      </h1>
+
+      <p class="subtitle">
+        The AI is uncertain about this highlight. Please confirm or correct the player.
+      </p>
+
+
+      <div class="review-grid">
+
+
+        <!-- Simulated video -->
+
+        <div class="video-card">
+
+          <div class="video-area">
+
+            <div class="field-lines"></div>
+
+            <div class="field-circle"></div>
+
+            <div class="player-marker" id="videoPlayerNumber">
+              #14
+            </div>
+
+          </div>
+
+          <div class="video-caption">
+            Simulated game footage · 00:23:17
+          </div>
+
+        </div>
+
+
+        <!-- Review controls -->
+
+        <div class="review-card">
+
+          <h2>
+            Who is this player?
+          </h2>
+
+
+          <div class="ai-proposal">
+
+            <div class="ai-label">
+              AI thinks
+            </div>
+
+            <div class="proposal-player"
+                 id="proposalPlayer">
+              #14 — Maya Chen
+            </div>
+
+            <div class="confidence">
+              Low confidence
+            </div>
+
+          </div>
+
+
+          <button class="confirm-button"
+                  onclick="confirmPlayer()">
+            Confirm this player
+          </button>
+
+
+          <div class="divider"></div>
+
+
+          <div class="alternative-heading">
+            Or select another player
+          </div>
+
+          <div id="alternativePlayers"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- SCREEN 3: SUCCESS -->
+  <!-- ========================= -->
+
+  <div id="successScreen" style="display:none;">
+
+    <div class="content">
+
+      <div class="success-card">
+
+        <div class="success-icon">
+          ✓
+        </div>
+
+        <h1>
+          Tagging confirmed
+        </h1>
+
+        <p>
+          This highlight has been assigned to
+          <span class="assigned-player"
+                id="assignedPlayer">
+            #4 — Jordan Lee
+          </span>.
+        </p>
+
+        <div class="saved-note">
+          Your correction has been saved and will help improve future player tagging.
+        </div>
+
+        <button class="return-button"
+                onclick="backToResults()">
+          Back to game
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>
+
+
+<script>
+
+
+  /*
+    Prototype data.
+  */
+
+  const reviewData = {
+
+    "14": {
+
+      proposed: "#14 — Maya Chen",
+
+      alternatives: [
+        "#4 — Sofia Patel",
+        "#7 — Jordan Lee",
+        "#9 — Ava Williams"
+      ],
+
+      videoNumber: "#14"
+
+    },
+
+
+    "4": {
+
+      proposed: "#4 — Sofia Patel",
+
+      alternatives: [
+        "#14 — Maya Chen",
+        "#7 — Jordan Lee",
+        "#9 — Ava Williams"
+      ],
+
+      videoNumber: "#4"
+
+    }
+
+  };
+
+
+  /*
+    Track which clips have been reviewed.
+  */
+
+  const reviewedClips = {
+
+    "14": false,
+    "4": false
+
+  };
+
+
+  let currentClip = null;
+
+
+  /*
+    Open coach review.
+  */
+
+  function openReview(clipNumber) {
+
+    currentClip = clipNumber;
+
+    const data = reviewData[clipNumber];
+
+
+    document.getElementById("resultsScreen").style.display = "none";
+
+    document.getElementById("successScreen").style.display = "none";
+
+    document.getElementById("reviewScreen").style.display = "block";
+
+
+    document.getElementById("proposalPlayer").textContent =
+      data.proposed;
+
+
+    document.getElementById("videoPlayerNumber").textContent =
+      data.videoNumber;
+
+
+    const alternativesContainer =
+      document.getElementById("alternativePlayers");
+
+
+    alternativesContainer.innerHTML = "";
+
+
+    data.alternatives.forEach(function(player) {
+
+      const button =
+        document.createElement("button");
+
+      button.className =
+        "alternative-button";
+
+      button.textContent =
+        player;
+
+      button.onclick =
+        function() {
+          selectPlayer(player);
+        };
+
+      alternativesContainer.appendChild(button);
+
+    });
+
+  }
+
+
+  /*
+    Coach confirms AI's proposed assignment.
+  */
+
+  function confirmPlayer() {
+
+    const data =
+      reviewData[currentClip];
+
+    completeReview(data.proposed);
+
+  }
+
+
+  /*
+    Coach selects a different player.
+  */
+
+  function selectPlayer(player) {
+
+    completeReview(player);
+
+  }
+
+
+  /*
+    Complete the review and save the new state.
+  */
+
+  function completeReview(player) {
+
+    reviewedClips[currentClip] = true;
+
+    /*
+      Store the final player assignment so the results
+      screen can display it.
+    */
+
+    reviewData[currentClip].finalPlayer = player;
+
+
+    document.getElementById("assignedPlayer").textContent =
+      player;
+
+
+    document.getElementById("reviewScreen").style.display =
+      "none";
+
+    document.getElementById("resultsScreen").style.display =
+      "none";
+
+    document.getElementById("successScreen").style.display =
+      "block";
+
+  }
+
+
+  /*
+    Return to results and update the tagging state.
+  */
+
+  function backToResults() {
+
+    document.getElementById("reviewScreen").style.display =
+      "none";
+
+    document.getElementById("successScreen").style.display =
+      "none";
+
+    document.getElementById("resultsScreen").style.display =
+      "block";
+
+
+    /*
+      Update each reviewed clip.
+    */
+
+    Object.keys(reviewedClips).forEach(function(clipNumber) {
+
+      if (reviewedClips[clipNumber]) {
+
+        updateClipAfterReview(clipNumber);
+
+      }
+
+    });
+
+
+    updateSummary();
+
+  }
+
+
+  /*
+    Change a reviewed clip from "Needs review"
+    to "Tagging confirmed."
+  */
+
+  function updateClipAfterReview(clipNumber) {
+
+    const status =
+      document.getElementById("status" + clipNumber);
+
+    const action =
+      document.getElementById("action" + clipNumber);
+
+    const player =
+      document.getElementById("player" + clipNumber);
+
+
+    status.className =
+      "clip-status success";
+
+    status.textContent =
+      "✓";
+
+
+    action.innerHTML =
+      '<span class="confirmed-label">Tagging confirmed</span>';
+
+
+    player.textContent =
+      reviewData[clipNumber].finalPlayer;
+
+  }
+
+
+  /*
+    Update the summary at the top of the page.
+  */
+
+  function updateSummary() {
+
+    const reviewedCount =
+      Object.values(reviewedClips).filter(Boolean).length;
+
+    const automaticCount =
+      3 + reviewedCount;
+
+    const remainingCount =
+      2 - reviewedCount;
+
+
+    const summary =
+      document.getElementById("taggingSummary");
+
+
+    if (remainingCount === 0) {
+
+      summary.textContent =
+        "All 5 highlights tagged";
+
+    } else {
+
+      summary.textContent =
+        automaticCount +
+        " tagged automatically · " +
+        remainingCount +
+        (remainingCount === 1
+          ? " needs review"
+          : " need review");
+
+    }
+
+  }
+
+
+</script>
+
+</body>
+</html>
